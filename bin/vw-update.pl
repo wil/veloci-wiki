@@ -8,10 +8,7 @@ my $WATCH_PATH=$ARGV[0];
 my $GROWL = `PATH="\$PATH:/usr/local/bin";which growlnotify`;
 chomp $GROWL;
 
-my $GIT = _find_bin('git/bin/git');
-unless (-f $GIT) {
-    die ("No Git found!");
-}
+my $GIT = `PATH="\$PATH:/usr/local/bin";which git`;
 
 _check_watch_dir($WATCH_PATH);
 
@@ -45,10 +42,3 @@ sub _check_watch_dir {
     1;
 }
 
-sub _find_bin {
-    my $target = shift;
-    my $paths = `locate $target`;
-    my @paths = split(qr{\n},$paths);
-    my $res=$paths[0];
-    return $res;
-}
